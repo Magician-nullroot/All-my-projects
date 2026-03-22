@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our Cosmic Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cosmic-blue: #0c1446;
+            --moon-silver: #e0e7ff;
+            --star-gold: #facc15;
+            --earth-green: #22c55e;
+            --text-light: #f1f5f9;
+            --love-crimson: #ef4444;
+            --heart-glow: #f472b6;
+            --blush-gold: #f59e0b;
+            --memory-peach: #fed7aa;
+            --deep-rose: #be185d;
+            --royal-gold: #facc15;
+            --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            color: var(--text-light);
+            background-color: var(--cosmic-blue);
+            overflow-x: hidden;
+            position: relative;
+            height: 800vh;
+            scroll-behavior: smooth;
+            will-change: transform;
+        }
+
+        h1, h2, h3, h4 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* SVG Background */
+        #background-svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        @keyframes stairSlide {
+            0% {
+                offset-distance: 0%;
+            }
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        #audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: calc(15% + 20px);
+            z-index: 300;
+            background: rgba(26, 0, 51, 0.7);
+            border: 2px solid var(--royal-gold);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        /* Earth glow - updated with romantic gradient */
+        .earth-glow {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 300px;
+            background: radial-gradient(circle, 
+                var(--heart-glow) 0%,
+                var(--memory-peach) 30%,
+                var(--earth-green) 70%,
+                transparent 100%);
+            filter: blur(60px);
+            opacity: 0.4;
+            z-index: -1;
+            will-change: transform;
+        }
+
+        /* Moon container */
+        .moon-container {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 120px;
+            height: 120px;
+            z-index: 10;
+            will-change: transform;
+        }
+
+        /* Moon glow animation - updated with heart glow */
+        @keyframes moonPulse {
+            0%, 100% {
+                box-shadow: 0 0 30px 10px rgba(244, 114, 182, 0.4), 
+                           0 0 60px 20px rgba(244, 114, 182, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 40px 15px rgba(244, 114, 182, 0.6), 
+                           0 0 80px 25px rgba(244, 114, 182, 0.3);
+            }
+        }
+
+        .moon-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                var(--heart-glow) 0%, 
+                var(--moon-silver) 60%,
+                transparent 100%);
+            animation: moonPulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .moon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, 
+                #e0e7ff 0%, 
+                #c7d2fe 40%, 
+                #a5b4fc 70%, 
+                #818cf8 100%);
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.4);
+            z-index: 2;
+        }
+
+        /* Timeline sections - optimized for mobile */
+        .timeline-wrapper {
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+        }
+
+        /* Timeline card - updated with romantic styling */
+        .timeline-card {
+            position: relative;
+            width: 94vw;
+            max-width: 360px;
+            min-height: 85vh;
+            border-radius: 24px;
+            border: 4px solid var(--heart-glow);
+            background: linear-gradient(135deg, 
+                var(--cosmic-blue), 
+                var(--deep-rose), 
+                var(--memory-peach));
+            box-shadow: 0 25px 50px rgba(239, 68, 68, 0.3), 
+                        inset 0 0 25px rgba(244, 114, 182, 0.2);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: transform 0.6s var(--transition), opacity 0.6s var(--transition);
+            will-change: transform, opacity;
+            z-index: 10;
+        }
+
+        .timeline-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Step number - updated with blush gold */
+        .step-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--blush-gold);
+            margin-bottom: 12px;
+            text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+            line-height: 1;
+        }
+
+        .step-sticker {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+            margin: 12px 0 24px 0;
+            will-change: transform;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-card .content {
+            width: 100%;
+            text-align: left;
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-weight: 400;
+            will-change: contents;
+        }
+
+        /* Title colors for each card */
+        .timeline-wrapper:nth-child(1) .title { color: var(--love-crimson); }
+        .timeline-wrapper:nth-child(2) .title { color: var(--heart-glow); }
+        .timeline-wrapper:nth-child(3) .title { color: var(--blush-gold); }
+        .timeline-wrapper:nth-child(4) .title { color: var(--deep-rose); }
+        .timeline-wrapper:nth-child(5) .title { color: var(--memory-peach); }
+        .timeline-wrapper:nth-child(6) .title { color: var(--love-crimson); }
+        .timeline-wrapper:nth-child(7) .title { color: var(--heart-glow); }
+        .timeline-wrapper:nth-child(8) .title { color: var(--blush-gold); }
+
+        .timeline-card .title {
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .timeline-card.visible .title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-card .description {
+            font-weight: 400;
+            color: #cbd5e1;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .timeline-card.visible .description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .typewriter-container {
+            position: relative;
+            min-height: 2.5em;
+        }
+
+        .typewriter-cursor {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--star-gold);
+            animation: blink 0.8s infinite;
+            opacity: 0;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Navigation dots - updated with blush gold */
+        .nav-dots {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--moon-silver);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 2px solid var(--moon-silver);
+            will-change: transform;
+        }
+
+        .nav-dot.active {
+            background: var(--blush-gold);
+            transform: scale(1.4);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.8);
+        }
+
+        /* CTA Button - updated with romantic gradient */
+        .cta-button {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 60px;
+            background: linear-gradient(45deg, 
+                var(--love-crimson), 
+                var(--heart-glow), 
+                var(--blush-gold));
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            box-shadow: 0 12px 28px rgba(244, 114, 182, 0.4);
+            cursor: pointer;
+            transition: all 0.25s var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+        }
+
+        .cta-button:hover {
+            transform: translateX(-50%) scale(1.04) translateY(-2px);
+            box-shadow: 0 16px 32px rgba(244, 114, 182, 0.5);
+        }
+
+        /* Stars - optimized for mobile */
+        .star {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--star-gold);
+            border-radius: 50%;
+            filter: blur(0.5px);
+            will-change: transform;
+        }
+
+        /* Scroll snap */
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Specific optimizations for 720x1640 mobile */
+        @media (max-height: 820px) and (max-width: 400px) {
+            .timeline-card {
+                min-height: 80vh;
+                padding: 20px 16px;
+            }
+            
+            .step-number {
+                font-size: 2rem;
+            }
+            
+            .timeline-card .content {
+                font-size: 1.15rem;
+            }
+            
+            .timeline-card .title {
+                font-size: 1.4rem;
+            }
+            
+            .step-sticker {
+                width: 130px;
+                height: 130px;
+                margin: 10px 0 20px 0;
+            }
+            
+            .moon-container {
+                top: 20px;
+                right: 20px;
+                width: 100px;
+                height: 100px;
+            }
+            
+            .nav-dots {
+                left: 16px;
+                gap: 10px;
+            }
+            
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .cta-button {
+                bottom: 24px;
+                width: 170px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Performance optimizations */
+        .timeline-wrapper, .timeline-card, .moon-container, .nav-dots, .cta-button {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Hide scrollbar for better mobile experience */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <audio id="flute-music" preload="auto" loop="true" >
+        <source src="bells-melody-holiday-bells.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Audio Control Button -->
+    <div id="audio-control">
+        <svg class="audio-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="var(--royal-gold)"/>
+        </svg>
+    </div>
+
+    <!-- Background SVG with additional heart path -->
+    <svg id="background-svg" viewBox="0 0 375 812" preserveAspectRatio="xMidYMid slice">
+        <!-- Stairs path optimized for mobile -->
+        <path d="M40,80 Q140,180 200,300 Q260,420 320,540 L340,660" 
+              stroke="#bb86fc" stroke-width="2" fill="none" opacity="0.7" />
+        <!-- Heart path - added as requested -->
+        <path d="M50,90 Q150,190 210,310 Q270,430 330,550" 
+              stroke="var(--heart-glow)" stroke-width="1.8" fill="none" opacity="0.8" />
+    </svg>
+
+    <!-- Optimized moon with glow -->
+    <div class="moon-container">
+        <div class="moon-glow"></div>
+        <div class="moon"></div>
+    </div>
+
+    <!-- Earth glow -->
+    <div class="earth-glow"></div>
+
+    <!-- Stars orbiting moon -->
+    <div id="stars-container"></div>
+
+    <!-- Timeline sections with fixed content structure -->
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="1">
+            <div class="step-number">01</div>
+            <img src="https://i.pinimg.com/736x/c7/6f/8c/c76f8cd2932fec97823a95a8b9605bc4.jpg" class="step-sticker" alt="Rose hands">
+            <div class="content">
+                <div class="title">We Met on Threads</div>
+                <div class="description">You made a simple post about wanting to make friends. I replied without expectation, just curiosity. One message led to another, and soon Threads felt too small, so we moved to Instagram. Somewhere in that early chaos, I even mistook you for a guy, which still makes me laugh at my own blindness. Fate clearly didn't care about my assumptions. It had already decided.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="2">
+            <div class="step-number">02</div>
+            <img src="https://i.pinimg.com/736x/21/83/ac/2183aca99d06cf549760806b43558290.jpg" class="step-sticker" alt="Heart hands">
+            <div class="content">
+                <div class="title">Our Debates Sparked</div>
+                <div class="description">Our first real conversation wasn't soft or polite. It was a debate that stretched for hours. Opinions clashed, logic collided, egos danced. And yet, instead of draining us, it pulled us deeper. I didn't want to win. I wanted to keep talking. That's when interest quietly replaced argument.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="3">
+            <div class="step-number">03</div>
+            <img src="https://i.pinimg.com/736x/78/ba/a4/78baa445e079274cbfc445872b3f5a83.jpg" class="step-sticker" alt="First meeting">
+            <div class="content">
+                <div class="title">Our Friendship Began</div>
+                <div class="description">Debates turned into daily conversations. Hours melted without permission. We talked about everything—random thoughts, serious dreams, meaningless jokes that somehow meant everything. Friendship formed naturally, without labels, without effort. You became part of my routine before I even noticed.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="4">
+            <div class="step-number">04</div>
+            <img src="https://i.pinimg.com/736x/a5/54/03/a55403643309f213fccbbfe5b7bd912f.jpg" class="step-sticker" alt="Starting together">
+            <div class="content">
+                <div class="title">Our Love Sparked</div>
+                <div class="description">Love didn't arrive with an announcement. It grew slowly, hidden inside constant talks, inside laughter, inside comfort. We didn't confess at first. We were already loving each other without saying it out loud. The feeling matured on its own, patient and undeniable.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="5">
+            <div class="step-number">05</div>
+            <img src="https://i.pinimg.com/736x/78/ba/a4/78baa445e079274cbfc445872b3f5a83.jpg" class="step-sticker" alt="Late night talks">
+            <div class="content">
+                <div class="title">Our Happiness and Sadness with Each Other</div>
+                <div class="description">We shared joy that felt lighter because it was shared, and sadness that felt survivable because we faced it together. There were emotional moments, vulnerable moments, times when words failed but presence didn't. Through it all, the bond only tightened.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="6">
+            <div class="step-number">06</div>
+            <img src="https://i.pinimg.com/736x/ca/3e/60/ca3e60e432a9817d2beab606f7dce5ed.jpg" class="step-sticker" alt="Milestone moment">
+            <div class="content">
+                <div class="title">Our Confession</div>
+                <div class="description">When we finally confessed, it wasn't a surprise. It was a truth catching up to words. We accepted each other fully, without hesitation. That moment didn't start our love; it confirmed it.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="7">
+            <div class="step-number">07</div>
+            <img src="https://i.pinimg.com/736x/4d/90/ec/4d90ecea404b5f5d649e82a2b349feb0.jpg" class="step-sticker" alt="Forever promise">
+            <div class="content">
+                <div class="title">Our Lovely Talks and Beautiful Stories, Sometimes Erotic but Ours</div>
+                <div class="description">Our conversations became a world of their own. Funny, warm, sometimes bold, sometimes deeply emotional. Intimate in ways that were never empty, always meaningful. Those moments weren't just desire; they were connection, trust, and comfort wrapped together.</div>
+            </div>
+        </div>
+    </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-card" data-step="8">
+            <div class="step-number">08</div>
+            <img src="https://i.pinimg.com/736x/4d/90/ec/4d90ecea404b5f5d649e82a2b349feb0.jpg" class="step-sticker" alt="Forever promise">
+            <div class="content">
+                <div class="title">I Want You to Be My Wife</div>
+                <div class="description">Now we are a couple, but my heart already thinks beyond that word. I don't just love you—I choose you. I want a future where you are my wife, my partner, my constant. I want a life built on our debates, our laughter, our intimacy, our growth. I love you deeply, completely, and without doubt.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation dots -->
+    <div class="nav-dots" id="nav-dots">
+        <div class="nav-dot active" data-target="1"></div>
+        <div class="nav-dot" data-target="2"></div>
+        <div class="nav-dot" data-target="3"></div>
+        <div class="nav-dot" data-target="4"></div>
+        <div class="nav-dot" data-target="5"></div>
+        <div class="nav-dot" data-target="6"></div>
+        <div class="nav-dot" data-target="7"></div>
+        <div class="nav-dot" data-target="8"></div>
+    </div>
+
+    <!-- CTA Button -->
+    <button class="cta-button" id="cta-button">Our Moments Await ↓</button>
+
+    <script>
+        // Audio control
+        const fluteMusic = document.getElementById('flute-music');
+        const audioControl = document.getElementById('audio-control');
+        
+        // Initialize audio control icon
+        function updateAudioIcon() {
+            const icon = audioControl.querySelector('.audio-icon path');
+            if (fluteMusic.paused) {
+                icon.setAttribute('d', 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z');
+            } else {
+                icon.setAttribute('d', 'M12 14.5c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z');
+            }
+        }
+        
+        audioControl.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (fluteMusic.paused) {
+                fluteMusic.volume = 0.4;
+                fluteMusic.play().then(() => {
+                    updateAudioIcon();
+                }).catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+            } else {
+                fluteMusic.pause();
+                updateAudioIcon();
+            }
+        });
+        
+        // Auto-play attempt on first user interaction
+        function enableAudio() {
+            fluteMusic.volume = 0.4;
+            fluteMusic.play().catch(e => {
+                // Keep control visible if auto-play fails
+            });
+            document.removeEventListener('click', enableAudio);
+            document.removeEventListener('touchstart', enableAudio);
+        }
+        
+        document.addEventListener('click', enableAudio, { once: true });
+        document.addEventListener('touchstart', enableAudio, { once: true });
+
+        // Performance-optimized stars creation
+        const starsContainer = document.getElementById('stars-container');
+        const moonCenter = { x: window.innerWidth - 80, y: 80 };
+        const numStars = 8;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            const angle = (i / numStars) * Math.PI * 2;
+            const radius = 60 + Math.random() * 30;
+            const x = moonCenter.x + Math.cos(angle) * radius;
+            const y = moonCenter.y + Math.sin(angle) * radius;
+            
+            star.style.left = `${x}px`;
+            star.style.top = `${y}px`;
+            
+            const duration = 12 + Math.random() * 8;
+            star.style.animation = `orbit${i} ${duration}s ease-in-out infinite`;
+            
+            const keyframes = `
+                @keyframes orbit${i} {
+                    0%, 100% { transform: translate(0, 0); }
+                    50% { transform: translate(${Math.cos(angle + Math.PI/2) * 10}px, ${Math.sin(angle + Math.PI/2) * 10}px); }
+                }
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = keyframes;
+            document.head.appendChild(style);
+            
+            starsContainer.appendChild(star);
+        }
+
+        // Fixed word-by-word typewriter animation
+        function wordByWordTypewriter(element, text, delay = 80) {
+            element.innerHTML = '';
+            const words = text.split(' ');
+            let i = 0;
+            
+            const type = () => {
+                if (i < words.length) {
+                    if (i === 0) {
+                        element.textContent = words[i];
+                    } else {
+                        element.textContent += ' ' + words[i];
+                    }
+                    i++;
+                    
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typewriter-cursor';
+                    element.appendChild(cursor);
+                    
+                    setTimeout(() => {
+                        if (cursor.parentNode) {
+                            cursor.parentNode.removeChild(cursor);
+                        }
+                        type();
+                    }, delay);
+                } else {
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typewriter-cursor';
+                    element.appendChild(cursor);
+                    
+                    setTimeout(() => {
+                        if (cursor.parentNode) {
+                            cursor.parentNode.removeChild(cursor);
+                        }
+                    }, 2000);
+                }
+            };
+            
+            setTimeout(type, 300);
+        }
+
+        // Scroll-based card animations with performance optimizations
+        const timelineWrappers = document.querySelectorAll('.timeline-wrapper');
+        const cards = document.querySelectorAll('.timeline-card');
+        const navDots = document.querySelectorAll('.nav-dot');
+        
+        // Use Intersection Observer for better performance
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const card = entry.target.querySelector('.timeline-card');
+                if (entry.isIntersecting && !card.classList.contains('visible')) {
+                    card.classList.add('visible');
+                    
+                    if (!card.dataset.typewriterInit) {
+                        card.dataset.typewriterInit = 'true';
+                        const titleEl = card.querySelector('.title');
+                        const descEl = card.querySelector('.description');
+                        
+                        const titleText = titleEl.textContent;
+                        const descText = descEl.textContent;
+                        
+                        titleEl.innerHTML = '';
+                        descEl.innerHTML = '';
+                        
+                        setTimeout(() => {
+                            wordByWordTypewriter(titleEl, titleText, 120);
+                        }, 200);
+                        
+                        setTimeout(() => {
+                            wordByWordTypewriter(descEl, descText, 100);
+                        }, 1000);
+                    }
+                }
+            });
+        }, { 
+            threshold: 0.3,
+            rootMargin: '0px 0px -40% 0px'
+        });
+
+        timelineWrappers.forEach(wrapper => {
+            cardObserver.observe(wrapper);
+        });
+
+        // Optimized navigation dots with passive event listeners
+        function updateActiveDot() {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            timelineWrappers.forEach((wrapper, index) => {
+                const wrapperTop = wrapper.offsetTop;
+                const isActive = (scrollTop >= wrapperTop - windowHeight * 0.2) && 
+                                (scrollTop < wrapperTop + wrapper.offsetHeight - windowHeight * 0.2);
+                
+                if (isActive) {
+                    navDots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateActiveDot();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Dot click navigation
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const targetWrapper = timelineWrappers[index];
+                if (targetWrapper) {
+                    window.scrollTo({
+                        top: targetWrapper.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }, { passive: true });
+        });
+
+        // CTA button
+        document.getElementById('cta-button').addEventListener('click', () => {
+            window.location.href = 'last.html';
+        }, { passive: true });
+
+        // Create stair dots animation
+        const stairDots = [];
+        const pathData = "M40,80 Q140,180 200,300 Q260,420 320,540 L340,660";
+        
+        function createStairDots() {
+            const svg = document.getElementById('background-svg');
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('stroke', 'none');
+            
+            document.body.appendChild(path);
+            const pathLength = path.getTotalLength();
+            document.body.removeChild(path);
+            
+            for (let i = 0; i < 4; i++) {
+                const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dot.setAttribute('r', '3');
+                dot.setAttribute('fill', '#facc15');
+                dot.setAttribute('opacity', '0.8');
+                dot.setAttribute('class', 'stair-dot');
+                
+                const ratio = (i * 0.25) + 0.1;
+                const point = path.getPointAtLength(pathLength * ratio);
+                dot.setAttribute('cx', point.x);
+                dot.setAttribute('cy', point.y);
+                
+                dot.animate([
+                    { cx: point.x, cy: point.y },
+                    { cx: point.x + 20, cy: point.y + 20 }
+                ], {
+                    duration: 3000 + i * 500,
+                    iterations: Infinity,
+                    easing: 'ease-in-out'
+                });
+                
+                svg.appendChild(dot);
+                stairDots.push(dot);
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            createStairDots();
+            
+            const moonContainer = document.querySelector('.moon-container');
+            if (window.innerWidth < 400) {
+                moonContainer.style.right = '16px';
+                moonContainer.style.top = '16px';
+                moonContainer.style.width = '90px';
+                moonContainer.style.height = '90px';
+            }
+            
+            const images = [
+                'https://i.pinimg.com/736x/c7/6f/8c/c76f8cd2932fec97823a95a8b9605bc4.jpg',
+                'https://i.pinimg.com/736x/78/ba/a4/78baa445e079274cbfc445872b3f5a83.jpg',
+                'https://i.pinimg.com/736x/21/83/ac/2183aca99d06cf549760806b43558290.jpg',
+                'https://i.pinimg.com/736x/a5/54/03/a55403643309f213fccbbfe5b7bd912f.jpg',
+                'https://i.pinimg.com/736x/ca/3e/60/ca3e60e432a9817d2beab606f7dce5ed.jpg',
+                'https://i.pinimg.com/736x/b3/4f/63/b34f63255388583e32e950a69494c059.jpg',
+                'https://i.pinimg.com/736x/4d/90/ec/4d90ecea404b5f5d649e82a2b349feb0.jpg'
+            ];
+
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+            
+            // Initialize audio icon
+            updateAudioIcon();
+        }, { passive: true });
+
+        // Handle resize with debounce
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth < 400) {
+                    document.querySelector('.moon-container').style.cssText = `
+                        right: 16px;
+                        top: 16px;
+                        width: 90px;
+                        height: 90px;
+                    `;
+                } else {
+                    document.querySelector('.moon-container').style.cssText = `
+                        right: 30px;
+                        top: 30px;
+                        width: 120px;
+                        height: 120px;
+                    `;
+                }
+            }, 100);
+        }, { passive: true });
+    </script>
+</body>
+</html>
+

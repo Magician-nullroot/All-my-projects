@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Romantic Chocolate Day Catch 💝</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    user-select: none;
+  }
+
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, #ffdde1 0%, #ffafbd 50%, #ffc3a0 100%);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #5a1a1a;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 15px;
+    position: relative;
+  }
+
+  /* Romantic background elements */
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  body::before {
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.2) 0%, transparent 20%),
+      radial-gradient(circle at 90% 30%, rgba(255, 182, 193, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 50% 80%, rgba(255, 192, 203, 0.1) 0%, transparent 30%);
+  }
+
+  /* Romantic header */
+  .header-container {
+    max-width: 600px;
+    margin: 0 auto 15px;
+    padding: 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 182, 193, 0.3);
+  }
+
+  h1 {
+    margin: 5px 0;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: #c44569;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #c44569, #e66767);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    color: #786fa6;
+    font-weight: 300;
+  }
+
+  /* Score display */
+  #score-container {
+    background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+    max-width: 200px;
+    margin: 0 auto 20px;
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(198, 91, 109, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #score-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+    z-index: -1;
+    border-radius: 50px;
+  }
+
+  #score {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #score::before {
+    content: "💝";
+    font-size: 1.8rem;
+    animation: pulse 2s infinite;
+  }
+
+  /* Game container */
+  #game {
+    width: 95%;
+    max-width: 500px;
+    height: 65vh;
+    min-height: 450px;
+    max-height: 550px;
+    background: linear-gradient(180deg, rgba(255, 240, 245, 0.9), rgba(255, 230, 235, 0.8));
+    margin: 0 auto 20px;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 15px 35px rgba(0, 0, 0, 0.15),
+      inset 0 0 30px rgba(255, 255, 255, 0.8);
+    border: 3px solid rgba(255, 182, 193, 0.5);
+  }
+
+  /* Romantic border effect */
+  #game::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #ffafbd, #ffc3a0, #ffafbd);
+    border-radius: 28px;
+    z-index: -1;
+    animation: borderGlow 4s infinite linear;
+  }
+
+  /* Chocolate and romantic items */
+  .falling-item {
+    position: absolute;
+    font-size: 2.2rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    top: -60px;
+    transition: transform 0.2s;
+  }
+
+  .chocolate {
+    animation: floatGlow 1.5s infinite alternate;
+  }
+
+  .chocolate-small {
+    font-size: 1.8rem;
+    animation: floatGlow 1.3s infinite alternate;
+  }
+
+  .chocolate-box {
+    font-size: 2.5rem;
+    animation: chocolateBox 2s infinite alternate;
+  }
+
+  .heart {
+    animation: heartBeat 1.2s infinite alternate;
+  }
+
+  .rose {
+    animation: rotateSlow 4s infinite linear;
+  }
+
+  .kiss {
+    animation: kissFloat 2s infinite alternate;
+  }
+
+  /* Special eggplant emoji */
+  .eggplant {
+    animation: eggplantFloat 1.8s infinite alternate;
+    filter: drop-shadow(0 0 5px #8a2be2);
+  }
+
+  /* Basket */
+  #basket {
+    position: absolute;
+    bottom: 20px;
+    width: 100px;
+    height: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(145deg, #ff6b95, #ff8e9e);
+    border-radius: 0 0 25px 25px;
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.2),
+      inset 0 4px 8px rgba(255, 255, 255, 0.4);
+    z-index: 20;
+    transition: transform 0.1s;
+  }
+
+  #basket::before {
+    content: "💖";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
+    animation: basketHeart 2s infinite alternate;
+  }
+
+  #basket::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 15px;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    opacity: 0.8;
+  }
+
+  /* Controls */
+  #controls {
+    margin: 25px auto;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 500px;
+  }
+
+  .btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    font-size: 28px;
+    background: linear-gradient(145deg, #ff7eb3, #ff758c);
+    color: white;
+    box-shadow: 
+      0 8px 20px rgba(255, 107, 149, 0.4),
+      inset 0 -3px 10px rgba(0, 0, 0, 0.1),
+      inset 0 3px 10px rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255,255,255,0.1), transparent);
+    border-radius: 50%;
+  }
+
+  .btn:active, .btn.active {
+    transform: scale(0.88);
+    box-shadow: 
+      0 3px 10px rgba(255, 107, 149, 0.4),
+      inset 0 -3px 10px rgba(0, 0, 0, 0.1),
+      inset 0 3px 10px rgba(255, 255, 255, 0.4);
+  }
+
+  /* Smaller pop-up messages */
+  #message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem; /* Smaller font */
+    color: white;
+    text-align: center;
+    max-width: 280px; /* Smaller width */
+    border: 2px solid white;
+    transition: transform 0.4s, opacity 0.4s;
+    opacity: 0;
+  }
+
+  #message.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  /* Animations */
+  @keyframes floatGlow {
+    0% { 
+      filter: drop-shadow(0 0 5px #8b4513) drop-shadow(0 0 10px #ff6b95);
+      transform: translateY(0px); 
+    }
+    100% { 
+      filter: drop-shadow(0 0 10px #ff6b95) drop-shadow(0 0 20px #ff8e9e);
+      transform: translateY(-5px); 
+    }
+  }
+
+  @keyframes chocolateBox {
+    0% { 
+      transform: translateY(0px) rotate(-5deg); 
+      filter: drop-shadow(0 0 8px #8b4513);
+    }
+    100% { 
+      transform: translateY(-8px) rotate(5deg); 
+      filter: drop-shadow(0 0 15px #ff6b95);
+    }
+  }
+
+  @keyframes heartBeat {
+    0% { 
+      transform: scale(1); 
+      filter: drop-shadow(0 0 5px #ff6b95);
+    }
+    100% { 
+      transform: scale(1.15); 
+      filter: drop-shadow(0 0 15px #ff4757);
+    }
+  }
+
+  @keyframes rotateSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes kissFloat {
+    0% { 
+      transform: translateY(0px) rotate(-5deg);
+      filter: drop-shadow(0 0 5px #ff9ff3);
+    }
+    100% { 
+      transform: translateY(-8px) rotate(5deg);
+      filter: drop-shadow(0 0 15px #f368e0);
+    }
+  }
+
+  @keyframes eggplantFloat {
+    0% { 
+      transform: translateY(0px) rotate(-10deg) scale(1);
+      filter: drop-shadow(0 0 5px #8a2be2) drop-shadow(0 0 10px #9370db);
+    }
+    100% { 
+      transform: translateY(-10px) rotate(10deg) scale(1.1);
+      filter: drop-shadow(0 0 10px #8a2be2) drop-shadow(0 0 20px #9370db);
+    }
+  }
+
+  @keyframes basketHeart {
+    0% { transform: translateX(-50%) scale(1); }
+    100% { transform: translateX(-50%) scale(1.1); }
+  }
+
+  @keyframes borderGlow {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    #game { 
+      height: 55vh;
+      min-height: 400px;
+    }
+    .btn {
+      width: 65px;
+      height: 65px;
+      font-size: 26px;
+    }
+    #controls {
+      gap: 20px;
+    }
+    .falling-item {
+      font-size: 1.8rem;
+      width: 40px;
+      height: 40px;
+    }
+    #message {
+      font-size: 1.3rem;
+      max-width: 250px;
+      padding: 12px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    #game { 
+      height: 50vh;
+      min-height: 350px;
+    }
+    .btn {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+    #controls {
+      gap: 15px;
+    }
+    #basket {
+      width: 85px;
+      height: 45px;
+    }
+    #basket::before {
+      font-size: 24px;
+      top: -22px;
+    }
+    .falling-item {
+      font-size: 1.6rem;
+      width: 35px;
+      height: 35px;
+    }
+    #message {
+      font-size: 1.1rem;
+      max-width: 220px;
+      padding: 10px 18px;
+    }
+  }
+
+  @media (max-height: 600px) {
+    #game { 
+      height: 50vh;
+      min-height: 300px;
+    }
+    h1 { font-size: 1.8rem; }
+    .header-container {
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    #controls {
+      margin: 15px auto;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="header-container">
+  <h1>Happy Chocolate Day, My Love! 💕</h1>
+  <p class="subtitle">Catch all the sweet treats before they fall!</p>
+</div>
+
+<div id="score-container">
+  <div id="score">0</div>
+</div>
+
+<div id="game">
+  <div id="basket"></div>
+</div>
+
+<div id="controls">
+  <button class="btn" id="left">⬅️</button>
+  <button class="btn" id="right">➡️</button>
+</div>
+
+<div id="message"></div>
+
+<script>
+  const game = document.getElementById("game");
+  const basket = document.getElementById("basket");
+  const scoreElement = document.getElementById("score");
+  const leftBtn = document.getElementById("left");
+  const rightBtn = document.getElementById("right");
+  const messageElement = document.getElementById("message");
+
+  // Game state
+  let basketX = game.offsetWidth / 2 - 50;
+  let score = 0;
+  let gameSpeed = 1200; // Faster item creation (reduced from 900)
+  let items = [];
+  let lastTime = 0;
+  let isMovingLeft = false;
+  let isMovingRight = false;
+  let moveSpeed = 14;
+  let animationId = null;
+  let itemCount = 0;
+
+  // Romantic messages for special scores
+  const romanticMessages = [
+    "You're the chocolate to my heart! 💖",
+    "My love for you is sweeter than chocolate! 🍫",
+    "You make my heart melt! 💕",
+    "Every moment with you is a sweet treat! 🥰",
+    "You're the sweetest part of my life! 💝",
+    "My heart is yours forever!💘 and something else too😭"
+  ];
+
+  // Special message for eggplant
+  const eggplantMessage = " The Next Valentine I am there you might get a special Treat Baby Girl! 😉💦";
+
+  // Initialize basket position
+  basket.style.left = basketX + "px";
+
+  // Item types with weights for probability distribution
+  const itemTypes = [
+    // More chocolates (increased weight)
+    { emoji: "🍫", className: "chocolate", points: 1, weight: 0.4 },
+    { emoji: "🍫", className: "chocolate", points: 1, weight: 0.2 },
+    { emoji: "🍫", className: "chocolate-small", points: 1, weight: 0.2 },
+    { emoji: "🍫", className: "chocolate-small", points: 1, weight: 0.2 },
+    { emoji: "🍬", className: "chocolate", points: 1, weight: 1 }, // Candy
+    { emoji: "🍪", className: "chocolate", points: 1, weight: 1 }, // Cookie
+    { emoji: "🧁", className: "chocolate-small", points: 1, weight: 1 }, // Cupcake
+    { emoji: "🍩", className: "chocolate", points: 1, weight: 1}, // Donut
+    { emoji: "🍭", className: "chocolate", points: 1, weight: 1 }, // Lollipop
+    
+    // Chocolate box (special chocolate)
+    { emoji: "🎁", className: "chocolate-box", points: 3, weight: 1 },
+    
+    // Other romantic items
+    { emoji: "💖", className: "heart", points: 2, weight: 1 },
+    { emoji: "🌹", className: "rose", points: 3, weight: 0.2},
+    { emoji: "💋", className: "kiss", points: 2, weight: 1 },
+    
+    // Special eggplant (rare)
+    { emoji: "🍆", className: "eggplant", points: 10, weight: 0.1 }
+  ];
+
+  // Create weighted item array based on weights
+  function getWeightedItem() {
+    // Calculate total weight
+    const totalWeight = itemTypes.reduce((sum, item) => sum + item.weight, 0);
+    
+    // Pick a random number between 0 and total weight
+    let random = Math.random() * totalWeight;
+    
+    // Find which item this corresponds to
+    for (const item of itemTypes) {
+      random -= item.weight;
+      if (random <= 0) {
+        return item;
+      }
+    }
+    
+    // Fallback to first item
+    return itemTypes[0];
+  }
+
+  // Update score display
+  function updateScore() {
+    scoreElement.textContent = score;
+    
+    // Show romantic message at certain score milestones
+    if (score > 0 && (score % 10 === 0 || score === 5)) {
+      const randomIndex = Math.floor(Math.random() * romanticMessages.length);
+      showMessage(romanticMessages[randomIndex]);
+    }
+    
+    // Gradually increase difficulty
+    if (score > 0 && score % 15 === 0 && gameSpeed > 300) {
+      gameSpeed -= 30;
+    }
+  }
+
+  // Show message (smaller pop-up)
+  function showMessage(message) {
+    messageElement.textContent = message;
+    messageElement.classList.add("show");
+    
+    setTimeout(() => {
+      messageElement.classList.remove("show");
+    }, 2000);
+  }
+
+  // Basket movement
+  function moveBasket(direction) {
+    basketX += direction * moveSpeed;
+    basketX = Math.max(0, Math.min(game.offsetWidth - basket.offsetWidth, basketX));
+    basket.style.left = basketX + "px";
+    
+    // Add subtle bounce effect
+    basket.style.transform = `translateX(-50%) scale(${1 + Math.abs(direction) * 0.05})`;
+    setTimeout(() => {
+      basket.style.transform = 'translateX(-50%) scale(1)';
+    }, 100);
+  }
+
+  // Keyboard controls
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+      isMovingLeft = true;
+      leftBtn.classList.add("active");
+    }
+    if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+      isMovingRight = true;
+      rightBtn.classList.add("active");
+    }
+  });
+
+  document.addEventListener("keyup", e => {
+    if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+      isMovingLeft = false;
+      leftBtn.classList.remove("active");
+    }
+    if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+      isMovingRight = false;
+      rightBtn.classList.remove("active");
+    }
+  });
+
+  // Mobile button controls with touch and mouse support
+  function setupButtonControls() {
+    // Left button
+    leftBtn.addEventListener("mousedown", () => { isMovingLeft = true; leftBtn.classList.add("active"); });
+    leftBtn.addEventListener("touchstart", (e) => { 
+      e.preventDefault(); 
+      isMovingLeft = true; 
+      leftBtn.classList.add("active"); 
+    });
+    
+    leftBtn.addEventListener("mouseup", () => { isMovingLeft = false; leftBtn.classList.remove("active"); });
+    leftBtn.addEventListener("touchend", (e) => { 
+      e.preventDefault(); 
+      isMovingLeft = false; 
+      leftBtn.classList.remove("active"); 
+    });
+    leftBtn.addEventListener("mouseleave", () => { isMovingLeft = false; leftBtn.classList.remove("active"); });
+    
+    // Right button
+    rightBtn.addEventListener("mousedown", () => { isMovingRight = true; rightBtn.classList.add("active"); });
+    rightBtn.addEventListener("touchstart", (e) => { 
+      e.preventDefault(); 
+      isMovingRight = true; 
+      rightBtn.classList.add("active"); 
+    });
+    
+    rightBtn.addEventListener("mouseup", () => { isMovingRight = false; rightBtn.classList.remove("active"); });
+    rightBtn.addEventListener("touchend", (e) => { 
+      e.preventDefault(); 
+      isMovingRight = false; 
+      rightBtn.classList.remove("active"); 
+    });
+    rightBtn.addEventListener("mouseleave", () => { isMovingRight = false; rightBtn.classList.remove("active"); });
+  }
+
+  // Create falling items
+  function createItem() {
+    itemCount++;
+    
+    // Create more items as the game progresses
+    if (itemCount % 5 === 0) {
+      // Sometimes create 2 items at once
+      setTimeout(() => createSingleItem(), 100);
+    }
+    
+    createSingleItem();
+  }
+  
+  function createSingleItem() {
+    const itemType = getWeightedItem();
+    const item = document.createElement("div");
+    item.className = `falling-item ${itemType.className}`;
+    item.textContent = itemType.emoji;
+    item.dataset.points = itemType.points;
+    
+    const itemWidth = 45;
+    const xPos = Math.random() * (game.offsetWidth - itemWidth);
+    item.style.left = xPos + "px";
+    
+    game.appendChild(item);
+    
+    // Store item data for animation
+    items.push({
+      element: item,
+      x: xPos,
+      y: -60,
+      speed: 2 + Math.random() * 2 + (score / 50),
+      points: itemType.points,
+      emoji: itemType.emoji,
+      width: itemWidth,
+      height: 45
+    });
+  }
+
+  // Animation loop using requestAnimationFrame for smoother performance
+  function animateItems(timestamp) {
+    if (!lastTime) lastTime = timestamp;
+    const deltaTime = timestamp - lastTime;
+    
+    // Move basket continuously if button is held
+    if (isMovingLeft) moveBasket(-1);
+    if (isMovingRight) moveBasket(1);
+    
+    // Update all falling items
+    for (let i = items.length - 1; i >= 0; i--) {
+      const item = items[i];
+      item.y += item.speed;
+      item.element.style.top = item.y + "px";
+      
+      // Check for collision with basket
+      if (
+        item.y > game.offsetHeight - 100 &&
+        item.y < game.offsetHeight - 40 &&
+        item.x > basketX - 30 &&
+        item.x < basketX + basket.offsetWidth - 20
+      ) {
+        // Collision detected
+        score += item.points;
+        updateScore();
+        
+        // Special message for eggplant
+        if (item.emoji === "🍆") {
+          showMessage(eggplantMessage);
+        }
+        
+        // Add collection effect
+        item.element.style.transform = "scale(1.5)";
+        item.element.style.opacity = "0";
+        
+        setTimeout(() => {
+          if (item.element.parentNode) {
+            item.element.remove();
+          }
+        }, 200);
+        
+        items.splice(i, 1);
+        continue;
+      }
+      
+      // Check if item fell off screen
+      if (item.y > game.offsetHeight) {
+        item.element.remove();
+        items.splice(i, 1);
+      }
+    }
+    
+    lastTime = timestamp;
+    animationId = requestAnimationFrame(animateItems);
+  }
+
+  // Start the game
+  function startGame() {
+    // Start animation loop
+    animationId = requestAnimationFrame(animateItems);
+    
+    // Start creating items more frequently
+    setInterval(createItem, gameSpeed);
+    
+    // Setup controls
+    setupButtonControls();
+    
+    // Initial message
+    setTimeout(() => {
+      showMessage("Catch all the sweet treats! 💕");
+    }, 500);
+  }
+
+  // Handle window resize
+  window.addEventListener("resize", () => {
+    // Ensure basket stays within bounds
+    basketX = Math.min(basketX, game.offsetWidth - basket.offsetWidth);
+    basket.style.left = basketX + "px";
+  });
+
+  // Start the game when page loads
+  window.addEventListener("load", startGame);
+</script>
+
+</body>
+</html>

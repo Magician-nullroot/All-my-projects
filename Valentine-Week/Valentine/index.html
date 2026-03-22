@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Love 💕 Rose Garden</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Optimization */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            image-rendering: optimizeQuality;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        body {
+            background: linear-gradient(to bottom, 
+                #0a0a2a 0%,
+                #1a1a40 30%,
+                #2d1b4e 70%,
+                #0c0c1a 100%);
+            font-family: 'Dancing Script', cursive;
+            user-select: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Performance Optimizations */
+        .will-change {
+            will-change: transform, opacity;
+        }
+
+        /* Simplified Header */
+        .romantic-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 10px;
+            text-align: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, 
+                rgba(139, 0, 139, 0.6) 0%,
+                rgba(75, 0, 130, 0.3) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .love-message {
+            color: #ff1493;
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(20px, 5vw, 28px);
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 20, 147, 0.5);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Music Toggle Button */
+        .music-toggle {
+            background: rgba(255, 20, 147, 0.2);
+            border: 2px solid rgba(255, 20, 147, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: #ff1493;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .music-toggle:hover {
+            background: rgba(255, 20, 147, 0.4);
+            transform: scale(1.1);
+        }
+
+        .music-toggle.active {
+            background: rgba(255, 20, 147, 0.6);
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Ground Layer */
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, 
+                rgba(30, 70, 30, 0.8) 0%,
+                rgba(40, 85, 40, 0.6) 30%,
+                rgba(60, 110, 60, 0.3) 100%);
+            z-index: 1;
+        }
+
+        /* Rose Container - Optimized for mobile */
+        .rose-container {
+            position: absolute;
+            bottom: 100px;
+            transform-origin: center bottom;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Realistic Rose Stem */
+        .rose-stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 0;
+            background: linear-gradient(to bottom, 
+                #2e7d32 0%,
+                #4caf50 30%,
+                #66bb6a 60%,
+                #81c784 100%);
+            border-radius: 4px;
+            z-index: 1;
+            animation: growStem 2s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes growStem {
+            to { height: var(--stem-height); }
+        }
+
+        /* Realistic Thorns */
+        .thorn {
+            position: absolute;
+            width: 6px;
+            height: 15px;
+            background: linear-gradient(to bottom, #1b5e20, #2e7d32);
+            border-radius: 2px;
+            z-index: 2;
+            transform-origin: center;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        /* Natural Leaves - Bigger and more random */
+        .leaf {
+            position: absolute;
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%);
+            z-index: 2;
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.4));
+            transform-origin: left top;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+        }
+
+        .leaf-left {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+            transform: rotate(-45deg);
+        }
+
+        .leaf-right {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        /* Realistic Rose Bloom - Symmetrical */
+        .rose-bloom {
+            position: absolute;
+            bottom: var(--bloom-height);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            opacity: 0;
+            animation: fadeInBloom 0.8s ease-out forwards 1.5s;
+        }
+
+        @keyframes fadeInBloom {
+            to { opacity: 1; }
+        }
+
+        /* Symmetrical Petal Layers - VIBRANT RED ROSES */
+        .petal-layer {
+            position: absolute;
+            transform-origin: center bottom;
+        }
+
+        /* Inner Petals (Center) - Vibrant Red */
+        .inner-petal {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, 
+                #ff0000 0%,      /* Bright red */
+                #cc0000 40%,     /* Darker red */
+                #990000 80%);    /* Deep red */
+            border-radius: 50%;
+            transform-origin: center;
+            opacity: 0;
+            animation: bloomInner 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        }
+
+        @keyframes bloomInner {
+            to { opacity: 1; }
+        }
+
+        /* Middle Petals - Vibrant Red */
+        .middle-petal {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, 
+                #ff3333 0%,      /* Bright red */
+                #ff0000 50%,     /* Pure red */
+                #cc0000 90%);    /* Dark red */
+            border-radius: 50%;
+            transform-origin: center;
+            opacity: 0;
+            animation: bloomMiddle 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        }
+
+        @keyframes bloomMiddle {
+            to { opacity: 1; }
+        }
+
+        /* Outer Petals - Vibrant Red with highlights */
+        .outer-petal {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, 
+                #ff6666 0%,      /* Light red */
+                #ff3333 50%,     /* Bright red */
+                #ff0000 100%);   /* Pure red */
+            border-radius: 50%;
+            transform-origin: center;
+            opacity: 0;
+            animation: bloomOuter 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.4s;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        }
+
+        @keyframes bloomOuter {
+            to { opacity: 1; }
+        }
+
+        /* Rose Center - Golden yellow for contrast */
+        .rose-center {
+            position: absolute;
+            background: radial-gradient(circle at center, 
+                #ffd700 0%,      /* Gold */
+                #ff9800 50%,     /* Orange */
+                #ff5722 100%);   /* Red-orange */
+            border-radius: 50%;
+            z-index: 21;
+            box-shadow: 
+                inset 0 0 10px rgba(255, 215, 0, 0.5),
+                0 0 20px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Dewdrops */
+        .dewdrop {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 255, 255, 0.3) 70%,
+                transparent 100%);
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+            z-index: 22;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* Love Ripple Effect */
+        .love-ripple {
+            position: absolute;
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple 1.2s ease-out;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: translate(-50%, -50%) scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 90%, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
+            border-radius: 2px;
+            filter: blur(1px);
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(500px) translateY(500px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 15s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Instructions */
+        .instructions {
+            position: fixed;
+            bottom: 120px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(14px, 3vw, 18px);
+            padding: 15px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 0 20px;
+            max-width: calc(100% - 40px);
+            animation: pulse 2s infinite;
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Love Counter */
+        .love-counter {
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            color: #ff0000;
+            font-size: clamp(14px, 3vw, 18px);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .romantic-header {
+                padding: 10px 5px;
+            }
+            
+            .love-message {
+                font-size: clamp(18px, 4vw, 24px);
+                padding-left: 10px;
+            }
+            
+            .music-toggle {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                margin-right: 5px;
+            }
+            
+            .love-counter {
+                top: auto;
+                bottom: 150px;
+                right: 50%;
+                transform: translateX(50%);
+                background: rgba(0, 0, 0, 0.6);
+            }
+            
+            .instructions {
+                bottom: 180px;
+                font-size: 16px;
+                padding: 12px;
+            }
+            
+            .rose-stem {
+                width: 6px;
+            }
+            
+            .ground {
+                height: 80px;
+            }
+            
+            .leaf {
+                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .love-message {
+                font-size: 26px;
+            }
+        }
+
+        /* Landscape optimization */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .romantic-header {
+                padding: 8px;
+            }
+            
+            .love-message {
+                font-size: 18px;
+            }
+            
+            .instructions {
+                bottom: 100px;
+                font-size: 14px;
+                padding: 10px;
+            }
+            
+            .ground {
+                height: 60px;
+            }
+            
+            .love-counter {
+                top: 70px;
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Romantic Header -->
+    <div class="romantic-header">
+        <button class="music-toggle" id="musicToggle">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <div class="love-message">🌹 Happy Rose Day 💝</div>
+        <div style="width: 40px;"></div> <!-- Spacer for symmetry -->
+    </div>
+    
+    <!-- Audio Player -->
+    <audio id="audioPlayer" loop>
+        <source src="bg.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Love Counter -->
+    <div class="love-counter">
+        <i class="fas fa-heart" style="color: #ff0000;"></i>
+        <span id="roseCounter">0 Roses</span>
+    </div>
+    
+    <!-- Ground Layer -->
+    <div class="ground"></div>
+    
+    <!-- Instructions -->
+    <div class="instructions" id="instructions">
+        💖 Touch anywhere to plant a rose for us 💖
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+            
+            // Optimized configuration
+            const CONFIG = {
+                MAX_ROSES: 12,
+                MAX_STARS: window.innerWidth < 768 ? 50 : 100,
+                MAX_HEARTS: window.innerWidth < 768 ? 15 : 30,
+                BLOOM_DELAY: 1200,
+                ANIMATION_DURATION: 2000
+            };
+            
+            // Performance tracking
+            let performance = {
+                lastFrameTime: 0,
+                frameCount: 0
+            };
+            
+            // State management
+            const state = {
+                roses: [],
+                roseCount: 0,
+                isMobile: window.innerWidth <= 768,
+                hasInstructions: false,
+                musicPlaying: false,
+                audioElement: null
+            };
+            
+            // DOM Cache
+            const DOM = {
+                body: document.body,
+                stars: document.getElementById('stars'),
+                instructions: document.getElementById('instructions'),
+                roseCounter: document.getElementById('roseCounter'),
+                musicToggle: document.getElementById('musicToggle'),
+                audioPlayer: document.getElementById('audioPlayer')
+            };
+            
+            // Initialize on load
+            window.addEventListener('load', init);
+            
+            // Main initialization
+            function init() {
+                optimizePerformance();
+                createStars();
+                createShootingStars();
+                createFloatingHearts();
+                setupEventListeners();
+                setupAudio();
+                
+                // Force GPU acceleration
+                DOM.body.classList.add('will-change');
+            }
+            
+            // Setup Audio with local file
+            function setupAudio() {
+                state.audioElement = DOM.audioPlayer;
+                state.audioElement.volume = 0.1; // Set to 50% volume
+                
+                DOM.musicToggle.addEventListener('click', toggleMusic);
+            }
+            
+            // Toggle music playback
+            function toggleMusic() {
+                if (!state.musicPlaying) {
+                    // Start music
+                    state.audioElement.play().catch(e => {
+                        console.log("Audio play failed:", e);
+                        showMessage("Click anywhere to enable audio", 2000);
+                    });
+                    DOM.musicToggle.classList.add('active');
+                    DOM.musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    state.musicPlaying = true;
+                } else {
+                    // Stop music
+                    state.audioElement.pause();
+                    DOM.musicToggle.classList.remove('active');
+                    DOM.musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    state.musicPlaying = false;
+                }
+            }
+            
+            // Performance optimizations
+            function optimizePerformance() {
+                // Reduce repaints
+                DOM.body.style.contentVisibility = 'auto';
+                
+                // Request animation frame for animations
+                requestAnimationFrame(animate);
+            }
+            
+            // Main animation loop
+            function animate(timestamp) {
+                // Limit frame rate on mobile
+                if (state.isMobile) {
+                    if (timestamp - performance.lastFrameTime < 16) {
+                        requestAnimationFrame(animate);
+                        return;
+                    }
+                }
+                
+                performance.lastFrameTime = timestamp;
+                performance.frameCount++;
+                
+                requestAnimationFrame(animate);
+            }
+            
+            // Create stars background
+            function createStars() {
+                const fragment = document.createDocumentFragment();
+                
+                for (let i = 0; i < CONFIG.MAX_STARS; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    
+                    // Create different star sizes
+                    const size = Math.random();
+                    let starSize;
+                    if (size < 0.7) {
+                        starSize = 1;
+                    } else if (size < 0.9) {
+                        starSize = 2;
+                    } else {
+                        starSize = 3;
+                    }
+                    
+                    star.style.width = star.style.height = `${starSize}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.opacity = Math.random() * 0.7 + 0.3;
+                    star.style.animationDelay = `${Math.random() * 4}s`;
+                    star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                    
+                    // Add some red stars
+                    if (Math.random() > 0.8) {
+                        star.style.backgroundColor = `rgba(255, 0, 0, ${Math.random() * 0.5 + 0.5})`;
+                    }
+                    
+                    fragment.appendChild(star);
+                }
+                
+                DOM.stars.appendChild(fragment);
+            }
+            
+            // Create shooting stars
+            function createShootingStars() {
+                const shootingStarCount = state.isMobile ? 2 : 4;
+                
+                for (let i = 0; i < shootingStarCount; i++) {
+                    setTimeout(() => {
+                        createShootingStar();
+                        setInterval(createShootingStar, 5000 + Math.random() * 10000);
+                    }, i * 2000);
+                }
+            }
+            
+            function createShootingStar() {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = `${Math.random() * 20}%`;
+                shootingStar.style.top = `${Math.random() * 30}%`;
+                shootingStar.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // Random brightness
+                const brightness = Math.random() * 0.5 + 0.5;
+                shootingStar.style.background = `linear-gradient(90deg, transparent, rgba(255, 0, 0, ${brightness}))`;
+                
+                DOM.stars.appendChild(shootingStar);
+                
+                // Auto-remove after animation
+                setTimeout(() => {
+                    if (shootingStar.parentNode) {
+                        shootingStar.parentNode.removeChild(shootingStar);
+                    }
+                }, 3000);
+            }
+            
+            // Create floating hearts
+            function createFloatingHearts() {
+                const hearts = ['💖', '💕', '💗', '💓', '💘', '💝'];
+                
+                for (let i = 0; i < CONFIG.MAX_HEARTS; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.className = 'floating-heart';
+                        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                        heart.style.left = `${Math.random() * 100}%`;
+                        heart.style.fontSize = `${Math.random() * 15 + 12}px`;
+                        heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                        heart.style.animationDelay = `${Math.random() * 5}s`;
+                        heart.style.color = `rgba(255, 0, 0, ${Math.random() * 0.5 + 0.5})`;
+                        
+                        DOM.body.appendChild(heart);
+                        
+                        // Auto-remove after animation
+                        setTimeout(() => {
+                            if (heart.parentNode) {
+                                heart.parentNode.removeChild(heart);
+                            }
+                        }, 15000);
+                    }, i * 500);
+                }
+            }
+            
+            // Create love ripple effect
+            function createRipple(x, y) {
+                const ripple = document.createElement('div');
+                ripple.className = 'love-ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                DOM.body.appendChild(ripple);
+                
+                // Auto cleanup
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 1200);
+            }
+            
+            // Create realistic 2D rose
+            function createRose(x, y) {
+                if (state.roseCount >= CONFIG.MAX_ROSES) {
+                    return;
+                }
+                
+                // Hide instructions after first rose
+                if (!state.hasInstructions) {
+                    state.hasInstructions = true;
+                    setTimeout(() => {
+                        DOM.instructions.style.opacity = '0';
+                        setTimeout(() => {
+                            DOM.instructions.style.display = 'none';
+                        }, 500);
+                    }, 1000);
+                }
+                
+                // Create ripple
+                createRipple(x, y);
+                
+                // Calculate stem height
+                const stemHeight = window.innerHeight - y - 100;
+                const roseId = `rose-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                
+                // Create container
+                const container = document.createElement('div');
+                container.className = 'rose-container';
+                container.id = roseId;
+                container.style.left = `${x}px`;
+                container.style.setProperty('--stem-height', `${stemHeight}px`);
+                container.style.setProperty('--bloom-height', `${stemHeight}px`);
+                
+                DOM.body.appendChild(container);
+                
+                // Create stem
+                const stem = document.createElement('div');
+                stem.className = 'rose-stem';
+                container.appendChild(stem);
+                
+                // Add thorns
+                setTimeout(() => {
+                    addThorns(stem, stemHeight);
+                    addNaturalLeaves(stem, stemHeight);
+                }, 800);
+                
+                // Add bloom
+                setTimeout(() => {
+                    createSymmetricalBloom(container, stemHeight, state.roseCount === 0);
+                    state.roseCount++;
+                    updateCounter();
+                    
+                    // Add to state
+                    state.roses.push({
+                        id: roseId,
+                        element: container,
+                        x: x,
+                        y: y
+                    });
+                    
+                    // Gentle sway animation
+                    startSwayAnimation(container);
+                }, CONFIG.BLOOM_DELAY);
+                
+                // Cleanup old roses if needed
+                if (state.roses.length > CONFIG.MAX_ROSES) {
+                    const oldRose = state.roses.shift();
+                    if (oldRose && oldRose.element.parentNode) {
+                        oldRose.element.parentNode.removeChild(oldRose.element);
+                    }
+                }
+            }
+            
+            // Add thorns to stem
+            function addThorns(stem, stemHeight) {
+                const thornCount = Math.floor(stemHeight / 70) + 2;
+                
+                for (let i = 0; i < thornCount; i++) {
+                    const thorn = document.createElement('div');
+                    thorn.className = 'thorn';
+                    thorn.style.bottom = `${25 + i * (stemHeight / thornCount)}px`;
+                    thorn.style.left = `${Math.random() > 0.5 ? '10px' : '-10px'}`;
+                    thorn.style.transform = `rotate(${Math.random() > 0.5 ? '0' : '180'}deg)`;
+                    stem.appendChild(thorn);
+                }
+            }
+            
+            // Add natural leaves - bigger and more random
+            function addNaturalLeaves(stem, stemHeight) {
+                const leafCount = Math.min(4, Math.floor(stemHeight / 100));
+                
+                for (let i = 0; i < leafCount; i++) {
+                    // Left leaf
+                    const leafLeft = document.createElement('div');
+                    leafLeft.className = 'leaf leaf-left';
+                    
+                    const sizeLeft = 25 + Math.random() * 20; // Bigger leaves
+                    leafLeft.style.width = `${sizeLeft}px`;
+                    leafLeft.style.height = `${sizeLeft * 0.8}px`;
+                    leafLeft.style.bottom = `${40 + i * (stemHeight / leafCount) + Math.random() * 20}px`;
+                    leafLeft.style.left = '-15px';
+                    leafLeft.style.transform = `rotate(-${30 + Math.random() * 15}deg)`;
+                    leafLeft.style.opacity = '0';
+                    leafLeft.style.animation = `fadeInBloom 0.5s ease-out forwards ${0.5 + i * 0.1}s`;
+                    
+                    stem.appendChild(leafLeft);
+                    
+                    // Right leaf
+                    const leafRight = document.createElement('div');
+                    leafRight.className = 'leaf leaf-right';
+                    
+                    const sizeRight = 25 + Math.random() * 20;
+                    leafRight.style.width = `${sizeRight}px`;
+                    leafRight.style.height = `${sizeRight * 0.8}px`;
+                    leafRight.style.bottom = `${40 + i * (stemHeight / leafCount) + Math.random() * 20}px`;
+                    leafRight.style.right = '-15px';
+                    leafRight.style.transform = `rotate(${30 + Math.random() * 15}deg)`;
+                    leafRight.style.opacity = '0';
+                    leafRight.style.animation = `fadeInBloom 0.5s ease-out forwards ${0.7 + i * 0.1}s`;
+                    
+                    stem.appendChild(leafRight);
+                }
+            }
+            
+            // Create symmetrical rose bloom
+            function createSymmetricalBloom(container, stemHeight, isMainRose) {
+                const bloom = document.createElement('div');
+                bloom.className = 'rose-bloom';
+                container.appendChild(bloom);
+                
+                const bloomSize = isMainRose ? 120 : Math.min(100, 70 + state.roseCount * 3);
+                
+                // Create symmetrical inner petals
+                createSymmetricalInnerPetals(bloom, bloomSize);
+                
+                // Create symmetrical middle petals
+                createSymmetricalMiddlePetals(bloom, bloomSize);
+                
+                // Create symmetrical outer petals
+                createSymmetricalOuterPetals(bloom, bloomSize);
+                
+                // Add rose center
+                setTimeout(() => {
+                    const center = document.createElement('div');
+                    center.className = 'rose-center';
+                    center.style.width = `${bloomSize * 0.25}px`;
+                    center.style.height = `${bloomSize * 0.25}px`;
+                    center.style.left = `50%`;
+                    center.style.top = `50%`;
+                    center.style.transform = `translate(-50%, -50%)`;
+                    bloom.appendChild(center);
+                    
+                    // Add dewdrops
+                    addDewdrops(bloom, bloomSize);
+                }, 600);
+            }
+            
+            // Create symmetrical inner petals
+            function createSymmetricalInnerPetals(bloom, size) {
+                const petalCount = 5;
+                const petalSize = size * 0.35;
+                
+                for (let i = 0; i < petalCount; i++) {
+                    const angle = (i * 360 / petalCount) * Math.PI / 180;
+                    const radius = size * 0.08;
+                    
+                    const petal = document.createElement('div');
+                    petal.className = 'inner-petal';
+                    petal.style.width = `${petalSize}px`;
+                    petal.style.height = `${petalSize}px`;
+                    petal.style.left = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.top = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.transform = `
+                        translate(${Math.cos(angle) * radius}px, ${Math.sin(angle) * radius}px)
+                    `;
+                    petal.style.animationDelay = `${i * 0.1}s`;
+                    
+                    bloom.appendChild(petal);
+                }
+            }
+            
+            // Create symmetrical middle petals
+            function createSymmetricalMiddlePetals(bloom, size) {
+                const petalCount = 8;
+                const petalSize = size * 0.55;
+                
+                for (let i = 0; i < petalCount; i++) {
+                    const angle = (i * 360 / petalCount) * Math.PI / 180;
+                    const radius = size * 0.2;
+                    
+                    const petal = document.createElement('div');
+                    petal.className = 'middle-petal';
+                    petal.style.width = `${petalSize}px`;
+                    petal.style.height = `${petalSize}px`;
+                    petal.style.left = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.top = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.transform = `
+                        translate(${Math.cos(angle) * radius}px, ${Math.sin(angle) * radius}px)
+                        rotate(${angle}rad)
+                    `;
+                    petal.style.animationDelay = `${0.2 + i * 0.08}s`;
+                    
+                    bloom.appendChild(petal);
+                }
+            }
+            
+            // Create symmetrical outer petals
+            function createSymmetricalOuterPetals(bloom, size) {
+                const petalCount = 12;
+                const petalSize = size * 0.75;
+                
+                for (let i = 0; i < petalCount; i++) {
+                    const angle = (i * 360 / petalCount) * Math.PI / 180;
+                    const radius = size * 0.35;
+                    
+                    const petal = document.createElement('div');
+                    petal.className = 'outer-petal';
+                    petal.style.width = `${petalSize}px`;
+                    petal.style.height = `${petalSize}px`;
+                    petal.style.left = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.top = `calc(50% - ${petalSize/2}px)`;
+                    petal.style.transform = `
+                        translate(${Math.cos(angle) * radius}px, ${Math.sin(angle) * radius}px)
+                        rotate(${angle}rad)
+                    `;
+                    petal.style.animationDelay = `${0.4 + i * 0.06}s`;
+                    
+                    bloom.appendChild(petal);
+                }
+            }
+            
+            // Add dewdrops to petals
+            function addDewdrops(bloom, size) {
+                const petals = bloom.querySelectorAll('.middle-petal, .outer-petal');
+                const dewdropCount = Math.min(10, petals.length);
+                
+                for (let i = 0; i < dewdropCount; i++) {
+                    const petal = petals[i];
+                    const dewdrop = document.createElement('div');
+                    dewdrop.className = 'dewdrop';
+                    dewdrop.style.left = `${20 + Math.random() * 60}%`;
+                    dewdrop.style.top = `${20 + Math.random() * 60}%`;
+                    dewdrop.style.animationDelay = `${Math.random() * 2}s`;
+                    
+                    petal.appendChild(dewdrop);
+                }
+            }
+            
+            // Gentle sway animation for rose
+            function startSwayAnimation(container) {
+                let angle = 0;
+                
+                function sway() {
+                    angle += 0.015;
+                    const rotation = Math.sin(angle) * 2;
+                    container.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+                    
+                    requestAnimationFrame(sway);
+                }
+                
+                requestAnimationFrame(sway);
+            }
+            
+            // Update rose counter
+            function updateCounter() {
+                DOM.roseCounter.textContent = `${state.roseCount} Rose${state.roseCount !== 1 ? 's' : ''}`;
+                DOM.roseCounter.style.transform = 'scale(1.2)';
+                
+                setTimeout(() => {
+                    DOM.roseCounter.style.transform = 'scale(1)';
+                }, 300);
+            }
+            
+            // Show temporary message
+            function showMessage(text, duration = 3000) {
+                const message = document.createElement('div');
+                message.textContent = text;
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: #ff0000;
+                    font-size: clamp(18px, 3vw, 24px);
+                    text-align: center;
+                    z-index: 1001;
+                    background: rgba(0,0,0,0.8);
+                    padding: 15px 25px;
+                    border-radius: 15px;
+                    border: 2px solid #ff0000;
+                    backdrop-filter: blur(10px);
+                    animation: pulse 1s ease-in-out 3;
+                    pointer-events: none;
+                `;
+                
+                DOM.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    message.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        if (message.parentNode) {
+                            message.parentNode.removeChild(message);
+                        }
+                    }, 500);
+                }, duration);
+            }
+            
+            // Setup event listeners
+            function setupEventListeners() {
+                // Use passive listeners for better performance
+                DOM.body.addEventListener('click', handleInteraction, { passive: true });
+                DOM.body.addEventListener('touchstart', handleInteraction, { passive: true });
+                
+                // Prevent context menu on mobile
+                DOM.body.addEventListener('contextmenu', (e) => e.preventDefault());
+                
+                // Handle resize
+                window.addEventListener('resize', debounce(handleResize, 250));
+            }
+            
+            // Handle interaction
+            function handleInteraction(e) {
+                e.preventDefault();
+                
+                const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+                const y = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+                
+                // Validate coordinates
+                if (x > 0 && x < window.innerWidth && y > 0 && y < window.innerHeight) {
+                    createRose(x, y);
+                }
+            }
+            
+            // Handle resize
+            function handleResize() {
+                state.isMobile = window.innerWidth <= 768;
+                
+                // Update existing roses if needed
+                state.roses.forEach(rose => {
+                    if (rose.element && rose.element.parentNode) {
+                        const stemHeight = window.innerHeight - rose.y - 100;
+                        rose.element.style.setProperty('--stem-height', `${stemHeight}px`);
+                        rose.element.style.setProperty('--bloom-height', `${stemHeight}px`);
+                    }
+                });
+            }
+            
+            // Utility: Debounce function
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+        })();
+    </script>
+</body>
+</html

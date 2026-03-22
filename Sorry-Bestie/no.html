@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Please Forgive Me! 💔</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8b0000 0%, #6b0000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            background: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 20px;
+            padding: 30px 20px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.8s ease-out;
+            margin-top: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .character {
+            font-size: 80px;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+        
+        .heart-container {
+            margin: 20px 0;
+            min-height: 60px;
+        }
+        
+        .heart {
+            font-size: 50px;
+            color: #ff69b4;
+            transition: all 0.3s ease;
+        }
+        
+        .broken-heart {
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        h1 {
+            color: #8b0000;
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+            line-height: 1.3;
+            padding: 0 10px;
+        }
+        
+        .message {
+            color: #333333;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            text-align: center;
+            padding: 15px;
+            background: #fff0f5;
+            border-radius: 12px;
+            border: 2px solid #ffc0cb;
+        }
+        
+        .message p {
+            margin: 8px 0;
+        }
+        
+        .highlight {
+            color: #8b0000;
+            font-weight: 700;
+            background: linear-gradient(45deg, #8b0000, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tears {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tears.visible {
+            opacity: 1;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 2.5px solid #ffffff;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 110px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-yes {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border-color: #ff69b4;
+        }
+        
+        .btn-no {
+            background: linear-gradient(135deg, #8b0000, #6b0000);
+            color: white;
+            border-color: #8b0000;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .floating-tears {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-tear {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0.6;
+            animation: floatTear 8s infinite linear;
+            color: #ffffff;
+        }
+        
+        @keyframes floatTear {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(20px, 100vh) rotate(180deg); }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 500px) {
+            body {
+                padding: 15px 10px;
+                align-items: flex-start;
+            }
+            
+            .container {
+                padding: 25px 15px;
+                margin-top: 15px;
+            }
+            
+            .character {
+                font-size: 60px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .buttons {
+                gap: 12px;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.95rem;
+                min-width: 100px;
+            }
+            
+            .message {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-tears" id="floatingTears">
+        <!-- Tears will be generated by JavaScript -->
+    </div>
+    
+    <div class="container">
+        <div class="character" id="character">🥺</div>
+        
+        <div class="heart-container">
+            <div class="heart" id="heart">❤️</div>
+        </div>
+        
+        <h1>Nooo! Please Forgive Me! 💔</h1>
+        
+        <div class="message">
+            <p>I'm so sorry you're still upset with me... 😢</p>
+            
+            <p><span class="highlight">Remember how amazing we are together?</span> Our late-night talks that turn into morning confessions, the way we can read each other's minds, how we're each other's safe place...</p>
+            
+            <p>We're not just best friends  we're soulmates. Our chemistry is electric, our connection is real, and I can't imagine my life without you by my side.</p>
+            
+            <p>Please... give me another chance? I promise to be better, to stay awake, to listen to every single word you say...</p>
+        </div>
+        
+        <div class="tears" id="tears">
+            <span>💧</span>
+            <span>💧</span>
+            <span>💧</span>
+            <span>💧</span>
+            <span>💧</span>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-yes" id="yesBtn">Yes, I Forgive You 💚</button>
+            <button class="btn btn-no" id="noBtn">No, I'm Still Upset 💔</button>
+        </div>
+    </div>
+    
+    <script>
+        let noCount = 0;
+        const character = document.getElementById('character');
+        const heart = document.getElementById('heart');
+        const tears = document.getElementById('tears');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const floatingTears = document.getElementById('floatingTears');
+        
+        const characterStates = ['🥺', '😢', '😭', '😞', '😔', '😫'];
+        const heartStates = ['❤️', '💔', '💔💥', '💔💔', '💔💔💔', '💔💔💔💀'];
+        const tearCounts = [0, 1, 3, 5, 7, 10];
+        
+        function updateState() {
+            if (noCount >= characterStates.length) {
+                character.textContent = characterStates[characterStates.length - 1];
+            } else {
+                character.textContent = characterStates[noCount];
+            }
+            
+            if (noCount >= heartStates.length) {
+                heart.textContent = heartStates[heartStates.length - 1];
+            } else {
+                heart.textContent = heartStates[noCount];
+            }
+            
+            // Show tears based on count
+            if (noCount > 0) {
+                tears.classList.add('visible');
+                // Show only the number of tears corresponding to the count
+                const tearElements = tears.children;
+                for (let i = 0; i < tearElements.length; i++) {
+                    if (i < Math.min(noCount, tearElements.length)) {
+                        tearElements[i].style.opacity = '1';
+                    } else {
+                        tearElements[i].style.opacity = '0';
+                    }
+                }
+            }
+            
+            // Create floating tears
+            if (noCount > 0) {
+                createFloatingTear();
+            }
+            
+            // Make heart shake when it breaks
+            if (noCount > 0) {
+                heart.classList.add('broken-heart');
+                setTimeout(() => {
+                    heart.classList.remove('broken-heart');
+                }, 500);
+            }
+        }
+        
+        function createFloatingTear() {
+            const tear = document.createElement('div');
+            tear.className = 'floating-tear';
+            tear.textContent = '💧';
+            tear.style.left = Math.random() * 100 + '%';
+            tear.style.top = '-20px';
+            tear.style.animationDelay = Math.random() * 2 + 's';
+            tear.style.animationDuration = (6 + Math.random() * 4) + 's';
+            floatingTears.appendChild(tear);
+            
+            // Remove tear after animation
+            setTimeout(() => {
+                if (tear.parentNode) {
+                    tear.remove();
+                }
+            }, 10000);
+        }
+        
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            updateState();
+            
+            // Make buttons move around after multiple clicks to make it harder to click no
+            if (noCount >= 3) {
+                const containerRect = document.querySelector('.container').getBoundingClientRect();
+                const maxX = containerRect.width - noBtn.offsetWidth - 40;
+                const maxY = containerRect.height - noBtn.offsetHeight - 200;
+                
+                if (maxX > 0 && maxY > 0) {
+                    const newX = Math.random() * maxX + 20;
+                    const newY = Math.random() * maxY + 150;
+                    noBtn.style.position = 'absolute';
+                    noBtn.style.left = newX + 'px';
+                    noBtn.style.top = newY + 'px';
+                }
+            }
+            
+            // Special message after many no's
+            if (noCount >= 5) {
+                alert("I'm literally crying right now... please stop breaking my heart 😭💔");
+            }
+        });
+        
+        yesBtn.addEventListener('click', () => {
+            window.location.href = 'yes.html';
+        });
+        
+        // Initialize state
+        updateState();
+        
+        // Ensure page is scrollable
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.minHeight = '100vh';
+        });
+    </script>
+</body>
+</html>
+
